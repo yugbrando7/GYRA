@@ -1,0 +1,49 @@
+tool: nmap
+package: nmap
+category: network-scanning
+description: Maps hosts, ports, and services on a network
+when_to_use: Recon phase — always run this before anything else
+
+commands:
+  - cmd: "nmap <ip>"
+    meaning: Basic scan, checks the 1000 most common ports
+
+  - cmd: "nmap -sV <ip>"
+    meaning: Detect what software is running and its version on open ports
+    flag: "-sV"
+    flag_meaning: Version detection — version numbers are what you search exploits for
+    combine_with:
+      - cmd: "nmap -sV -sC <ip>"
+        meaning: Version detection plus default scripts, run these together
+
+  - cmd: "nmap -sC <ip>"
+    meaning: Run default scripts against found services — extra info, common checks
+    flag: "-sC"
+    flag_meaning: Script scan — runs nmap's built-in NSE scripts against open ports
+
+  - cmd: "nmap -p- <ip>"
+    meaning: Scan all 65535 ports, not just the common 1000
+    flag: "-p-"
+    flag_meaning: All ports — slower but finds services running on unusual ports
+
+  - cmd: "nmap -A <ip>"
+    meaning: Aggressive scan — OS detection, versions, scripts, and traceroute combined
+    flag: "-A"
+    flag_meaning: Aggressive — runs -sV, -sC, OS detection, and traceroute together
+
+  - cmd: "nmap -sn 192.168.1.0/24"
+    meaning: Ping sweep — find every live host on a subnet without scanning ports
+    flag: "-sn"
+    flag_meaning: No port scan — only checks which hosts are alive on the network
+
+  - cmd: "nmap -O <ip>"
+    meaning: Guess the operating system based on how the target responds
+    flag: "-O"
+    flag_meaning: OS detection — identifies Windows, Linux, BSD, etc.
+
+after:
+  - searchsploit
+  - metasploit
+
+path: networking
+path_step: 2

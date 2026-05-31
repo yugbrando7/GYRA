@@ -1,0 +1,9 @@
+NAME="GYRA"
+PRETTY_NAME="GYRA Linux"
+ID=gyra
+ID_LIKE=arch
+BUILD_ID=rolling
+ANSI_COLOR="1;36"
+HOME_URL="https://github.com/yugbrando7/GYRA"
+SUPPORT_URL="https://github.com/yugbrando7/GYRA/issues"
+BUG_REPORT_URL="https://github.com/yugbrando7/GYRA/issues"

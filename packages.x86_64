@@ -1,0 +1,28 @@
+# base
+base
+linux
+linux-firmware
+base-devel
+
+# boot
+grub
+efibootmgr
+
+# network
+networkmanager
+
+# terminal
+bash
+alacritty
+
+# gyra cli
+python
+python-pip
+python-yaml
+python-rich
+
+# essentials
+git
+curl
+wget
+sudo
