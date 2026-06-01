@@ -1,0 +1,41 @@
+tool: nikto
+package: nikto
+category: web
+description: Web server vulnerability scanner — finds misconfigurations, outdated software, and known issues
+when_to_use: Point it at any web server after discovery. It's noisy but fast — great for a quick vulnerability overview before going deeper.
+
+commands:
+  - cmd: "nikto -h http://target.com"
+    meaning: Scan a web server for common vulnerabilities and misconfigurations
+    flag: "-h"
+    flag_meaning: Host — the target URL or IP to scan
+
+  - cmd: "nikto -h http://target.com -p 8080"
+    meaning: Scan a web server running on a non-standard port
+    flag: "-p"
+    flag_meaning: Port — specify the port if it's not 80 or 443
+
+  - cmd: "nikto -h http://target.com -ssl"
+    meaning: Force SSL/HTTPS mode for the scan
+    flag: "-ssl"
+    flag_meaning: SSL — scan over HTTPS even if the URL doesn't start with https://
+
+  - cmd: "nikto -h http://target.com -o results.txt -Format txt"
+    meaning: Save scan results to a file
+    flag: "-o"
+    flag_meaning: Output — write results to a file
+
+  - cmd: "nikto -h http://target.com -Tuning 9"
+    meaning: Run only SQL injection tests — tune which check categories to run
+    flag: "-Tuning"
+    flag_meaning: Tuning — select specific test categories to run instead of all
+
+  - cmd: "nikto -h http://target.com -useproxy http://127.0.0.1:8080"
+    meaning: Route the scan through Burp Suite or another proxy to intercept traffic
+
+after:
+  - gobuster
+  - burpsuite
+
+path: web
+path_step: 3

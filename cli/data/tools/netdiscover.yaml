@@ -1,0 +1,37 @@
+tool: netdiscover
+package: netdiscover
+category: network-scanning
+description: ARP-based network scanner — finds live hosts on a local network fast
+when_to_use: First thing you run on a local network to find what's alive. Faster than nmap for host discovery, uses ARP so it can't be filtered by firewalls.
+
+commands:
+  - cmd: "netdiscover -r 192.168.1.0/24"
+    meaning: Scan an entire subnet and list every live host with its MAC address
+    flag: "-r"
+    flag_meaning: Range — the subnet to scan in CIDR notation
+
+  - cmd: "netdiscover -i eth0"
+    meaning: Specify which network interface to use for scanning
+    flag: "-i"
+    flag_meaning: Interface — useful when you have multiple network adapters
+
+  - cmd: "netdiscover -p"
+    meaning: Passive mode — listen for ARP traffic without sending any packets, completely silent
+    flag: "-p"
+    flag_meaning: Passive — no packets sent, just listens to existing network traffic
+
+  - cmd: "netdiscover -r 192.168.1.0/24 -i eth0 -P"
+    meaning: Scan a range, use a specific interface, and print results then exit
+    flag: "-P"
+    flag_meaning: Print and exit — non-interactive mode, good for scripting
+
+  - cmd: "netdiscover -l targets.txt"
+    meaning: Read a list of IP ranges to scan from a file
+    flag: "-l"
+    flag_meaning: List — scan multiple ranges defined in a file
+
+after:
+  - nmap
+
+path: networking
+path_step: 1

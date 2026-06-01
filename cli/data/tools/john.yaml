@@ -1,0 +1,44 @@
+tool: john
+package: john
+category: password-cracking
+description: John the Ripper — CPU hash cracker, great for formats hashcat doesn't support
+when_to_use: When you have a hash from a file, archive, or system and want to crack it. Especially useful for non-GPU environments.
+
+commands:
+  - cmd: "john hash.txt"
+    meaning: Auto-detect hash type and crack using default wordlist
+
+  - cmd: "john hash.txt --wordlist=/usr/share/wordlists/rockyou.txt"
+    meaning: Crack using the rockyou wordlist — the most commonly used wordlist in pentesting
+    flag: "--wordlist"
+    flag_meaning: Wordlist — path to the file containing passwords to try
+
+  - cmd: "john hash.txt --format=NT"
+    meaning: Crack a specific hash format — use when auto-detect gets it wrong
+    flag: "--format"
+    flag_meaning: Format — explicitly tell john what type of hash you're cracking
+    combine_with:
+      - cmd: "john --list=formats"
+        meaning: Show every hash format john supports
+
+  - cmd: "john hash.txt --rules"
+    meaning: Apply mangling rules to the wordlist — adds numbers, symbols, capitals
+    flag: "--rules"
+    flag_meaning: Rules — mutates wordlist entries to cover common password patterns
+
+  - cmd: "john --show hash.txt"
+    meaning: Display already-cracked passwords without rerunning
+    flag: "--show"
+    flag_meaning: Show — reads cracked results from john's pot file
+
+  - cmd: "ssh2john id_rsa > hash.txt"
+    meaning: Convert an encrypted SSH private key into a crackable hash format
+
+  - cmd: "zip2john archive.zip > hash.txt"
+    meaning: Extract a crackable hash from a password-protected zip file
+
+after:
+  - hashcat
+
+path: password-cracking
+path_step: 2

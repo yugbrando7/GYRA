@@ -1,0 +1,56 @@
+tool: curl
+package: curl
+category: web
+description: Make HTTP requests from the terminal — the most fundamental web tool
+when_to_use: Any time you want to interact with a web server manually — test endpoints, send data, inspect headers, download files.
+
+commands:
+  - cmd: "curl http://target.com"
+    meaning: Send a GET request and print the response body
+
+  - cmd: "curl -I http://target.com"
+    meaning: Fetch only the HTTP headers — reveals server software, cookies, redirects
+    flag: "-I"
+    flag_meaning: Head — sends a HEAD request, returns headers only
+
+  - cmd: "curl -v http://target.com"
+    meaning: Verbose output — shows full request and response including headers
+    flag: "-v"
+    flag_meaning: Verbose — prints everything sent and received, useful for debugging
+
+  - cmd: "curl -X POST -d 'user=admin&pass=1234' http://target.com/login"
+    meaning: Send a POST request with form data — simulates a login form submission
+    flag: "-X"
+    flag_meaning: Request method — specify GET, POST, PUT, DELETE, etc.
+
+  - cmd: "curl -H 'Authorization: Bearer token123' http://target.com/api"
+    meaning: Send a request with a custom header — used for API authentication
+    flag: "-H"
+    flag_meaning: Header — add a custom HTTP header to the request
+
+  - cmd: "curl -b 'session=abc123' http://target.com/dashboard"
+    meaning: Send a request with a cookie — test authenticated endpoints
+    flag: "-b"
+    flag_meaning: Cookie — attach cookies to the request
+
+  - cmd: "curl -o file.txt http://target.com/file"
+    meaning: Download a file and save it
+    flag: "-o"
+    flag_meaning: Output — save the response to a file instead of printing it
+
+  - cmd: "curl -k https://target.com"
+    meaning: Skip SSL certificate verification — useful for self-signed certs on local targets
+    flag: "-k"
+    flag_meaning: Insecure — bypass SSL certificate errors
+
+  - cmd: "curl -x http://127.0.0.1:8080 http://target.com"
+    meaning: Route the request through a proxy like Burp Suite
+    flag: "-x"
+    flag_meaning: Proxy — send the request through a specified proxy
+
+after:
+  - gobuster
+  - nikto
+
+path: web
+path_step: 1

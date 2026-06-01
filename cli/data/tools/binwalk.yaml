@@ -1,0 +1,44 @@
+tool: binwalk
+package: binwalk
+category: forensics
+description: Firmware analysis and file extraction — finds hidden files and data embedded inside binary files
+when_to_use: When you have a firmware image, binary, or unknown file and want to see what's inside it. Common in CTF forensics and IoT security.
+
+commands:
+  - cmd: "binwalk file.bin"
+    meaning: Scan a file and list everything detected inside it — file systems, archives, images, etc.
+
+  - cmd: "binwalk -e file.bin"
+    meaning: Extract everything detected inside the file into a folder
+    flag: "-e"
+    flag_meaning: Extract — automatically extract all recognized file types found
+
+  - cmd: "binwalk -M file.bin"
+    meaning: Recursively extract — keeps extracting files found inside extracted files
+    flag: "-M"
+    flag_meaning: Matryoshka — recursive extraction, useful for nested archives
+
+  - cmd: "binwalk -E file.bin"
+    meaning: Calculate entropy across the file — high entropy means encrypted or compressed data
+    flag: "-E"
+    flag_meaning: Entropy — plots how random each byte region is, reveals hidden encrypted sections
+
+  - cmd: "binwalk -W file1.bin file2.bin"
+    meaning: Compare two binary files side by side — spot the differences
+    flag: "-W"
+    flag_meaning: Hexdump diff — visual comparison of two binary files
+
+  - cmd: "binwalk --dd='.*' file.bin"
+    meaning: Extract every signature match regardless of type
+    flag: "--dd"
+    flag_meaning: DD — extract specific types, .* means everything
+
+  - cmd: "binwalk -l 100 -o 500 file.bin"
+    meaning: Scan only 100 bytes starting at offset 500 — useful for large files
+
+after:
+  - ghidra
+  - strings
+
+path: forensics
+path_step: 2

@@ -1,0 +1,53 @@
+tool: hydra
+package: hydra
+category: password-cracking
+description: Online brute-force tool — attacks live login services over the network
+when_to_use: When you have a target service (SSH, FTP, HTTP login) and want to brute-force credentials. Unlike hashcat, this attacks live systems.
+
+commands:
+  - cmd: "hydra -l admin -P wordlist.txt ssh://192.168.1.1"
+    meaning: Brute-force SSH login with username 'admin' and a password wordlist
+    flag: "-l"
+    flag_meaning: Login — single username to try
+
+  - cmd: "hydra -L users.txt -P wordlist.txt ssh://192.168.1.1"
+    meaning: Try multiple usernames and passwords against SSH
+    flag: "-L"
+    flag_meaning: Login list — file containing multiple usernames to try
+
+  - cmd: "hydra -l admin -P wordlist.txt ftp://192.168.1.1"
+    meaning: Brute-force an FTP login
+
+  - cmd: "hydra -l admin -P wordlist.txt 192.168.1.1 http-post-form '/login:user=^USER^&pass=^PASS^:Invalid'"
+    meaning: Brute-force an HTTP form login — replace field names and failure message to match the target
+
+  - cmd: "hydra -l admin -P wordlist.txt 192.168.1.1 -t 4 -V"
+    meaning: Run with 4 threads and verbose output showing each attempt
+    flag: "-t"
+    flag_meaning: Tasks — number of parallel connections, keep low to avoid lockouts
+    combine_with:
+      - cmd: "hydra ... -t 4 -V"
+        meaning: Verbose and throttled — safer, shows what's being tried
+
+  - cmd: "hydra -l admin -P wordlist.txt 192.168.1.1 -s 2222 ssh"
+    meaning: Attack SSH on a non-standard port
+    flag: "-s"
+    flag_meaning: Port — specify a non-default port for the service
+
+supported_services:
+  - ssh
+  - ftp
+  - http-get
+  - http-post-form
+  - smb
+  - mysql
+  - rdp
+  - telnet
+  - smtp
+
+after:
+  - netcat
+  - metasploit
+
+path: password-cracking
+path_step: 3

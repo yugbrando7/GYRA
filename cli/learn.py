@@ -65,6 +65,43 @@ def show_tool(tool, brief):
         c.print(f"    [cyan]{cmd['cmd']}[/]")
         c.print(f"    [dim]{cmd['meaning']}[/]\n" if cmd != tool['commands'][-1] else f"    [dim]{cmd['meaning']}[/]")
 
+    if tool.get("filters"):
+        c.print()
+        c.print("  [bold]useful filters[/]")
+        for f in tool['filters']:
+            c.print(f"    [cyan]{f['filter']}[/]")
+            c.print(f"    [dim]{f['meaning']}[/]")
+
+    if tool.get("common_modes"):
+        c.print()
+        c.print("  [bold]common hash modes[/]")
+        for m in tool['common_modes']:
+            c.print(f"    [cyan]-m {m['mode']}[/]  [dim]{m['type']}[/]")
+
+    if tool.get("key_concepts"):
+        c.print()
+        c.print("  [bold]key concepts[/]")
+        for k in tool['key_concepts']:
+            c.print(f"    [cyan]{k['term']}[/]  [dim]{k['meaning']}[/]")
+
+    if tool.get("workflow"):
+        c.print()
+        c.print("  [bold]workflow[/]")
+        for step in tool['workflow']:
+            c.print(f"    [cyan]{step['step']}.[/]  {step['description']}")
+
+    if tool.get("wordlists"):
+        c.print()
+        c.print("  [bold]wordlists[/]")
+        for w in tool['wordlists']:
+            c.print(f"    [cyan]{w['path']}[/]")
+            c.print(f"    [dim]{w['meaning']}[/]")
+
+    if tool.get("supported_services"):
+        c.print()
+        services = "  ·  ".join(tool['supported_services'])
+        c.print(f"  [bold]supported services[/]  [dim]{services}[/]")
+
     if tool.get("after"):
         c.print()
         c.print("  [bold]what to do after[/]")

@@ -1,0 +1,53 @@
+tool: hashcat
+package: hashcat
+category: password-cracking
+description: GPU-accelerated hash cracking — the fastest offline password cracker
+when_to_use: When you have a captured hash and want to recover the plaintext password.
+
+commands:
+  - cmd: "hashcat -m 0 hash.txt wordlist.txt"
+    meaning: Crack an MD5 hash using a wordlist
+    flag: "-m"
+    flag_meaning: Hash mode — tells hashcat what type of hash you're cracking
+
+  - cmd: "hashcat -m 1000 hash.txt wordlist.txt"
+    meaning: Crack an NTLM hash — the format Windows uses for passwords
+
+  - cmd: "hashcat -m 1800 hash.txt wordlist.txt"
+    meaning: Crack a SHA-512 hash — common on Linux /etc/shadow
+
+  - cmd: "hashcat -m 22000 hash.txt wordlist.txt"
+    meaning: Crack a WPA2 WiFi handshake captured with aircrack or hcxtools
+
+  - cmd: "hashcat -m 0 hash.txt wordlist.txt -r rules/best64.rule"
+    meaning: Use a ruleset to mutate wordlist entries — far more powerful than plain wordlist
+    flag: "-r"
+    flag_meaning: Rules — applies transformations like adding numbers, capitals, symbols
+
+  - cmd: "hashcat -m 0 hash.txt -a 3 ?a?a?a?a?a?a"
+    meaning: Brute force all 6-character combinations of any character
+    flag: "-a"
+    flag_meaning: Attack mode — 0=wordlist, 1=combination, 3=brute force mask
+
+  - cmd: "hashcat --show hash.txt"
+    meaning: Show already-cracked results from the potfile without rerunning
+
+common_modes:
+  - mode: "0"
+    type: MD5
+  - mode: "100"
+    type: SHA1
+  - mode: "1000"
+    type: NTLM
+  - mode: "1800"
+    type: SHA-512 (Linux shadow)
+  - mode: "3200"
+    type: bcrypt
+  - mode: "22000"
+    type: WPA2
+
+after:
+  - john
+
+path: password-cracking
+path_step: 1

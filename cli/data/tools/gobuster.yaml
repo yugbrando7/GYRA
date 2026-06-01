@@ -1,0 +1,49 @@
+tool: gobuster
+package: gobuster
+category: web
+description: Brute-force directories, files, and subdomains on web servers
+when_to_use: After finding a web server with nmap. Use gobuster to discover hidden paths, admin panels, backup files, and subdomains.
+
+commands:
+  - cmd: "gobuster dir -u http://target.com -w wordlist.txt"
+    meaning: Brute-force directories and files on a web server
+    flag: "dir"
+    flag_meaning: Directory mode — tries each word as a path on the target URL
+
+  - cmd: "gobuster dir -u http://target.com -w wordlist.txt -x php,html,txt"
+    meaning: Also try each word with file extensions — finds login.php, config.txt, etc.
+    flag: "-x"
+    flag_meaning: Extensions — append these to each wordlist entry
+
+  - cmd: "gobuster dir -u http://target.com -w wordlist.txt -t 50"
+    meaning: Run with 50 threads — faster but more noisy
+    flag: "-t"
+    flag_meaning: Threads — parallel requests, higher = faster but more detectable
+
+  - cmd: "gobuster dns -d target.com -w wordlist.txt"
+    meaning: Brute-force subdomains — finds dev.target.com, admin.target.com, etc.
+    flag: "dns"
+    flag_meaning: DNS mode — tries each word as a subdomain
+
+  - cmd: "gobuster dir -u http://target.com -w wordlist.txt -s 200,301,302"
+    meaning: Only show specific HTTP status codes in results
+    flag: "-s"
+    flag_meaning: Status codes — filter results to only show these response codes
+
+  - cmd: "gobuster dir -u http://target.com -w wordlist.txt -o results.txt"
+    meaning: Save results to a file
+    flag: "-o"
+    flag_meaning: Output — write findings to a file
+
+wordlists:
+  - path: /usr/share/wordlists/dirb/common.txt
+    meaning: Small, fast — good for a first pass
+  - path: /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt
+    meaning: Large and thorough — use when common.txt finds nothing
+
+after:
+  - nikto
+  - curl
+
+path: web
+path_step: 2

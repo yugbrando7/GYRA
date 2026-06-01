@@ -1,0 +1,62 @@
+tool: metasploit
+package: metasploit
+category: exploitation
+description: The exploitation framework — find, configure, and launch exploits against targets
+when_to_use: After recon. You have open ports and service versions from nmap, now you search for exploits and run them.
+
+commands:
+  - cmd: "msfconsole"
+    meaning: Launch the Metasploit console — everything else happens inside here
+
+  - cmd: "search <keyword>"
+    meaning: Search for modules by name, CVE, or service — run this inside msfconsole
+    flag: "search"
+    flag_meaning: Searches the full module library — exploits, payloads, scanners, auxiliaries
+
+  - cmd: "use exploit/multi/handler"
+    meaning: Load a module — replace the path with whatever search returned
+    flag: "use"
+    flag_meaning: Selects a module and makes it active
+
+  - cmd: "show options"
+    meaning: Show what needs to be configured before running the module
+    flag: "show options"
+    flag_meaning: Lists required and optional settings — RHOSTS, LHOST, LPORT, etc.
+
+  - cmd: "set RHOSTS 192.168.1.1"
+    meaning: Set the target IP address
+    flag: "set"
+    flag_meaning: Assign a value to a module option
+
+  - cmd: "set LHOST 192.168.1.100"
+    meaning: Set your local IP — used for reverse shell payloads
+
+  - cmd: "run"
+    meaning: Execute the loaded module against the target
+
+  - cmd: "sessions -l"
+    meaning: List all active sessions — open shells or meterpreter connections
+    flag: "sessions"
+    flag_meaning: Manage active connections to compromised targets
+
+  - cmd: "sessions -i 1"
+    meaning: Interact with session number 1 — drops you into the shell or meterpreter
+
+key_concepts:
+  - term: exploit
+    meaning: Code that takes advantage of a vulnerability to gain access
+  - term: payload
+    meaning: What runs on the target after the exploit succeeds — usually a shell
+  - term: meterpreter
+    meaning: An advanced payload that gives you a powerful interactive session
+  - term: RHOSTS
+    meaning: Remote host — the target IP or range
+  - term: LHOST
+    meaning: Local host — your machine's IP, used for reverse connections
+
+after:
+  - searchsploit
+  - netcat
+
+path: exploitation
+path_step: 2

@@ -1,0 +1,48 @@
+tool: openssl
+package: openssl
+category: utilities
+description: Cryptography toolkit — inspect certificates, generate hashes, test TLS, encrypt files
+when_to_use: Inspecting SSL/TLS on a target, generating or cracking hashes, working with certificates, or encrypting files.
+
+commands:
+  - cmd: "openssl s_client -connect target.com:443"
+    meaning: Connect to a server over TLS and inspect its certificate chain
+    flag: "s_client"
+    flag_meaning: SSL client — initiates a raw TLS connection for inspection
+
+  - cmd: "openssl x509 -in cert.pem -text -noout"
+    meaning: Read and display a certificate file in human-readable format
+    flag: "x509"
+    flag_meaning: Certificate tool — parse, display, and verify X.509 certificates
+
+  - cmd: "openssl dgst -md5 file.txt"
+    meaning: Generate an MD5 hash of a file
+    flag: "dgst"
+    flag_meaning: Digest — compute a hash of a file using the specified algorithm
+
+  - cmd: "openssl dgst -sha256 file.txt"
+    meaning: Generate a SHA-256 hash of a file — more secure than MD5
+
+  - cmd: "openssl passwd -6 'mypassword'"
+    meaning: Generate a SHA-512 hashed password — the format used in /etc/shadow
+    flag: "passwd"
+    flag_meaning: Password hash generator — outputs in crypt format for Linux systems
+
+  - cmd: "openssl enc -aes-256-cbc -in file.txt -out file.enc -k password"
+    meaning: Encrypt a file with AES-256
+    flag: "enc"
+    flag_meaning: Encrypt/decrypt — symmetric encryption using a cipher
+
+  - cmd: "openssl enc -d -aes-256-cbc -in file.enc -out file.txt -k password"
+    meaning: Decrypt a file encrypted with AES-256
+    flag: "-d"
+    flag_meaning: Decrypt — reverse an encryption operation
+
+  - cmd: "openssl genrsa -out key.pem 2048"
+    meaning: Generate a 2048-bit RSA private key
+
+after:
+  - netcat
+
+path: cryptography
+path_step: 1

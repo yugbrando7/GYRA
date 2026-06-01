@@ -1,0 +1,41 @@
+tool: wireshark
+package: wireshark-qt
+category: packet-analysis
+description: Capture and analyze network traffic in real time
+when_to_use: When you need to see exactly what's moving across a network — passwords, protocols, handshakes.
+
+commands:
+  - cmd: "wireshark"
+    meaning: Launch the GUI — select an interface and start capturing
+
+  - cmd: "wireshark -i eth0"
+    meaning: Launch and immediately start capturing on a specific interface
+    flag: "-i"
+    flag_meaning: Interface — specify which network interface to capture on
+
+  - cmd: "wireshark -r capture.pcap"
+    meaning: Open and analyze a previously saved capture file
+    flag: "-r"
+    flag_meaning: Read — load a .pcap file instead of capturing live
+
+  - cmd: "wireshark -k -i eth0"
+    meaning: Launch and start capturing immediately without waiting
+    flag: "-k"
+    flag_meaning: Start capture immediately on launch
+
+filters:
+  - filter: "http"
+    meaning: Show only HTTP traffic
+  - filter: "tcp.port == 80"
+    meaning: Show only traffic on port 80
+  - filter: "ip.addr == 192.168.1.1"
+    meaning: Show only traffic to or from a specific IP
+  - filter: "tcp contains password"
+    meaning: Search packet contents for the word 'password'
+
+after:
+  - tcpdump
+  - tshark
+
+path: networking
+path_step: 4
