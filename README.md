@@ -7,8 +7,6 @@
 
 **Ship almost nothing. Guide users through building a complete system while teaching them.**
 
-**Ship almost nothing. Guide users through building a complete system while teaching them.**
-
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 ![Status](https://img.shields.io/badge/status-in%20development-orange)
 ![Base](https://img.shields.io/badge/base-Arch%20Linux-1793d1)
