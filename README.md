@@ -1,6 +1,11 @@
 <div align="center">
 
-# GYRA
+<div align="center">
+
+# GYRA Linux
+### /ˈɡaɪrə/ &nbsp;·&nbsp; Hard G. Rhymes with "tiara".
+
+**Ship almost nothing. Guide users through building a complete system while teaching them.**
 
 **Ship almost nothing. Guide users through building a complete system while teaching them.**
 
